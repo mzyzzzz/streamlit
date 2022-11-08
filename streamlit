@@ -1,0 +1,28 @@
+import streamlit as st
+import pandas as pd
+import numpy as np
+st.title('mzy')
+traindata=pd.read_csv(r'C:\Users\hp\Desktop\traindata.csv')
+testdata=pd.read_csv(r'C:\Users\hp\Desktop\testdata.csv')
+set1=[]
+for i in traindata.id:
+  set1.append(int(i))
+set1=set(set1)
+option = st.selectbox('选择道路id',set1)
+traindata=traindata[traindata.id==option]
+testdata=testdata[testdata.id==option]
+traindata.index=range(len(traindata))
+testdata.index=range(len(testdata))
+if st.checkbox('显示表格'):
+    st.title('训练集')
+    traindata
+    st.title('测试集')
+    testdata
+st.title('训练集')
+st.line_chart(traindata.iloc[:,:2])
+st.write('MAE:',traindata.iloc[0,3])
+st.write('RMSE:',traindata.iloc[0,4])
+st.title('测试集')
+st.line_chart(testdata.iloc[:,:2])
+st.write('MAE:',testdata.iloc[0,3])
+st.write('RMSE:',testdata.iloc[0,4])
